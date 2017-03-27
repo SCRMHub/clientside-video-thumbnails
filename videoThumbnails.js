@@ -278,8 +278,8 @@
                         thumbnailCount  : this.opts.count,
                         videoDuration   : this.videoDuration,
                         videoInterval   : this.videoInterval,
-                        videoWidth      : this.thumbWidth,
-                        videoHeight     : this.thumbHeight,
+                        thumbWidth      : this.thumbWidth,
+                        thumbHeight     : this.thumbHeight,
                         videoStart      : this.videoStart
                     }
                 });
