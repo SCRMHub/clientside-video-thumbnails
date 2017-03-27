@@ -3,7 +3,7 @@
      * Class creation
      * @param  {array} opts  Any overriding options
      */
-    function videoThumbnails(opts) {
+    function VideoThumbnails(opts) {
         this.video;
         this.videoHtml;
         this.videoHeight;
@@ -36,10 +36,10 @@
          * Current options
          * @type {Object}
          */
-        this.opts = videoThumbnails.extend({}, this.defaults, opts || {});
+        this.opts = VideoThumbnails.extend({}, this.defaults, opts || {});
     };
 
-    videoThumbnails.prototype = {
+    VideoThumbnails.prototype = {
         /**
          * Register events
          * @param  {name}       event    Function to hook onto
@@ -358,7 +358,7 @@
         }
         return data;
     }
-    videoThumbnails.evalOpts = evalOpts;
+    VideoThumbnails.evalOpts = evalOpts;
 
     /**
     * Extends the destination object `dst` by copying all of the properties from
@@ -378,7 +378,7 @@
         });
         return dst;
     }
-    videoThumbnails.extend = extend;
+    VideoThumbnails.extend = extend;
 
     /**
     * Iterate each element of an object
@@ -407,16 +407,16 @@
           }
         }
     }
-    videoThumbnails.each = each;
+    VideoThumbnails.each = each;
 
     if ( typeof module === "object" && module && typeof module.exports === "object" ) {
         // Expose as module.exports in loaders that implement the Node
         // module pattern (including browserify). Do not create the global, since
         // the user will be storing it themselves locally, and globals are frowned
         // upon in the Node module world.
-        module.exports = videoThumbnails;
+        module.exports = VideoThumbnails;
     } else {
         // Otherwise expose to the global object as usual
-        window.videoThumbnails = videoThumbnails;
+        window.VideoThumbnails = VideoThumbnails;
     }    
 })(window, document);

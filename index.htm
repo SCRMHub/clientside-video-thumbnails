@@ -12,22 +12,25 @@
             <button id="cancel" style="display: none;">Cancel Capture</button>
         </p>
 
-        <progress id="progress" value="0" max="100" style="width: 100%;"></progress>
+        <progress id="progress" value="0" max="100" style="width: 100%; display: none;"></progress>
 
         <div id="screenShots"></div>
 
         <script>
         function upload() {
+            var thumbnailCount      = 8;
+            var thumbnailCounter    = 0;
+
             //Use a global to support the abort
-            var thumbnails = new videoThumbnails({
-                count : 8
+            var thumbnails = new VideoThumbnails({
+                count : thumbnailCount
             });           
 
             //Before start
             thumbnails.on('beforeCapture', function(image) {
                 ga('send', 'event', 'capture', 'before');
 
-                //
+                //reset html
                 $('#screenShots').html('');
 
                 //Hide buttons
@@ -40,13 +43,16 @@
             //Started
             thumbnails.on('startCapture', function() {
                 ga('send', 'event', 'capture', 'start');
-                console.log('Capture started');                
+                console.log('Capture started');
+                $('#progress').show().attr('max', thumbnailCount);
             });
 
             //Captured a thumb
             thumbnails.on('capture', function(image) {
+                thumbnailCounter++;
                 $('#screenShots').append($('<img>').attr('src', image).width('120'));
                 ga('send', 'event', 'capture', 'image ready');
+                $('#progress').show().attr('value', thumbnailCounter);
             });
 
             //User aborted thumbnail creation
@@ -57,6 +63,7 @@
                 //Turn buttons back on
                 $('#upload').show();
                 $('#cancel').hide();
+                $('#progress').hide();
 
                 //Clean out the images if you want
                 $('#screenShots').html('');
@@ -68,6 +75,7 @@
                 console.log('unsupported');
                 $('#upload').show();
                 $('#cancel').hide();
+                $('#progress').hide();
             });
 
             //Completed the thumbs
@@ -76,6 +84,7 @@
                 console.log('all done', thumbs);
                 $('#upload').show();
                 $('#cancel').hide();
+                $('#progress').hide();
             });
 
             //Full stats post complete with all thumbs
