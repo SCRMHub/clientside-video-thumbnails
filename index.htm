@@ -44,7 +44,7 @@
             thumbnails.on('startCapture', function() {
                 ga('send', 'event', 'capture', 'start');
                 console.log('Capture started');
-                $('#progress').show().attr('max', thumbnailCount);
+                $('#progress').show().attr('max', thumbnailCount).attr('value', 0);
             });
 
             //Captured a thumb
@@ -52,7 +52,7 @@
                 thumbnailCounter++;
                 $('#screenShots').append($('<img>').attr('src', image).width('120'));
                 ga('send', 'event', 'capture', 'image ready');
-                $('#progress').show().attr('value', thumbnailCounter);
+                $('#progress').attr('value', thumbnailCounter);
             });
 
             //User aborted thumbnail creation
