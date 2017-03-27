@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>S3 Upload - Raw Javascript</title>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="videoThumbnails.js"></script>
+    </head>
+    <body>
+        <p>
+            <input type="file" id="file" accept="video/*">
+            <button id="upload" onclick="upload()">Upload</button>
+            <button id="cancel" style="display: none;">Cancel Capture</button>
+        </p>
+
+        <progress id="progress" value="0" max="100" style="width: 100%;"></progress>
+
+        <div id="screenShots"></div>
+
+        <script>
+        function upload() {
+            //Use a global to support the abort
+            var thumbnails = new videoThumbnails({
+                count : 8
+            });           
+
+            //Before start
+            thumbnails.on('beforeCapture', function(image) {
+                ga('send', 'event', 'capture', 'before');
+
+                //
+                $('#screenShots').html('');
+
+                //Hide buttons
+                $('#upload').hide();
+                $('#cancel').on('click', function() {
+                    thumbnails.abort();                    
+                }).show();
+            });
+
+            //Started
+            thumbnails.on('startCapture', function() {
+                ga('send', 'event', 'capture', 'start');
+                console.log('Capture started');                
+            });
+
+            //Captured a thumb
+            thumbnails.on('capture', function(image) {
+                $('#screenShots').append($('<img>').attr('src', image).width('120'));
+                ga('send', 'event', 'capture', 'image ready');
+            });
+
+            //User aborted thumbnail creation
+            thumbnails.on('aborted', function() {
+                ga('send', 'event', 'capture', 'aborted');
+                console.log('aborted');
+
+                //Turn buttons back on
+                $('#upload').show();
+                $('#cancel').hide();
+
+                //Clean out the images if you want
+                $('#screenShots').html('');
+            });
+
+            //Cannot play video natively
+            thumbnails.on('unsupported', function() {
+                ga('send', 'event', 'capture', 'unsupported media');
+                console.log('unsupported');
+                $('#upload').show();
+                $('#cancel').hide();
+            });
+
+            //Completed the thumbs
+            thumbnails.on('complete', function(thumbs) {
+                ga('send', 'event', 'capture', 'complete');
+                console.log('all done', thumbs);
+                $('#upload').show();
+                $('#cancel').hide();
+            });
+
+            //Full stats post complete with all thumbs
+            thumbnails.on('completeDetail', function(details) {
+                ga('send', 'event', 'capture', 'complete details');
+                console.log('completeDetail', details);
+            });
+
+            thumbnails.capture($('#file')[0].files[0]);
+        }
+        </script>
+
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-42204741-11', 'auto');
+        ga('set', 'page', 'clientside-thumbnails');
+        ga('send', 'pageview');
+        </script>
+    </body>
+</html>
