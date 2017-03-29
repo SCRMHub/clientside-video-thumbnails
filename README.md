@@ -14,13 +14,13 @@ The primary goals were:
 In the SCRM Hub content creation flow, the thumbnail is created as soon as possible so the user gets a choice of images quickly (a sub 300mb takes seconds). We are also leveraging the user's browser to remove server load (especially important for large files)
 
 You can see a demo here:
-http://htmlpreview.github.io/?https://github.com/SCRMHub/clientside-thumbnails/blob/develop/index.htm
+http://htmlpreview.github.io/?https://github.com/SCRMHub/clientside-video-thumbnails/blob/develop/index.htm
 
 ## Getting Started ###
 
 ### Step 1: Download the files ###
 Download the ClientSide Video Thumbnail Creator here:
-https://github.com/SCRMHub/clientside-thumbnails/master.zip
+https://github.com/SCRMHub/clientside-video-thumbnails/master.zip
 
 The project is structured everything in the root for demostration but you can structure it however you like.
 
