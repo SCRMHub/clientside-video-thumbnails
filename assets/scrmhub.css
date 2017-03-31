@@ -1,0 +1,75 @@
+html, body {
+    background : #dddedf;
+    font-family: Arial,Helvetica,sans-serif;
+    height: 100%;
+    width: 100%;
+    padding: 20px 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 675px;
+    padding: 40px;
+    border-top: 5px solid #f4a807;
+    margin: 0 auto;
+    background: #1c2227;
+    color: #fff;
+    min-height: 100%;
+    overflow: visible;
+}
+
+.logo {
+    padding: 10px 0;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.35em;
+    margin: 15px 0 10px;
+    padding: 20px 0 0;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 1.4em;
+    margin: 15px 0 10px;
+    padding: 0;
+    text-align: left;
+}
+
+p {
+    font-size: 13px;
+    line-height: 24px;
+    margin: 0 0 12px;
+    padding: 0;
+    text-align: left;
+}
+p.intro {
+    margin-bottom: 20px;
+}
+p.read-more {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.progressBar {
+    height: 40px;
+}
+
+ul {
+    clear: both;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul li {
+    display: inline-block;
+    width: 33%;
+    padding: 1%;
+}
+ul li img {
+    width: 98%;
+}

@@ -4,21 +4,42 @@
         <title>S3 Upload - Raw Javascript</title>
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
         <script src="videoThumbnails.js"></script>
+        <link rel="stylesheet" href="assets/scrmhub.css" / >
     </head>
     <body>
-        <p>
-            <input type="file" id="file" accept="video/*">
-            <button id="upload" onclick="upload()">Upload</button>
-            <button id="cancel" style="display: none;">Cancel Capture</button>
-        </p>
+        <div class="container">
+            <div class="logo">
+                <img src="assets/logo.png" />
+            </div>
 
-        <progress id="progress" value="0" max="100" style="width: 100%; display: none;"></progress>
+            <h1>Clientside Video Thumbnails</h1>
+            <p class="intro">
+                This library attempts to make thumbnails in the browser before the user has uploaded it to the server. The idea being that it is one less thing for the user to wait for (especially if it's a large file), but also to save some processing time on the server.
+            </p>
+            <p class="read-more">
+                <a href="https://github.com/SCRMHub/clientside-video-thumbnails" target="_blank"><img src="assets/readmore.png" /></a>
+            </p>
 
-        <div id="screenShots"></div>
+            <h2>Try it yourself</h2>
+            <p>Select a file and click 'Create Thumbnails'</p>
+            <p>
+                <input type="file" id="file" accept="video/*">
+                <button id="upload" onclick="upload()">Create Thumbnails</button>
+                <button id="cancel" style="display: none;">Cancel Capture</button>
+            </p>
+
+            <div class="progressBar">
+                <progress id="progress" value="0" max="100" style="width: 100%; display: none;"></progress>
+            </div>
+
+            <ul id="screenShots">
+                
+            </ul>
+        </div>
 
         <script>
         function upload() {
-            var thumbnailCount      = 8;
+            var thumbnailCount      = 9;
             var thumbnailCounter    = 0;
 
             //Use a global to support the abort
@@ -50,7 +71,7 @@
             //Captured a thumb
             thumbnails.on('capture', function(image) {
                 thumbnailCounter++;
-                $('#screenShots').append($('<img>').attr('src', image).width('120'));
+                $('#screenShots').append($('<li>').append($('<img>').attr('src', image)));
                 ga('send', 'event', 'capture', 'image ready');
                 $('#progress').attr('value', thumbnailCounter);
             });
