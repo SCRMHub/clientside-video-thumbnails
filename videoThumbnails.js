@@ -5,7 +5,6 @@
      */
     function VideoThumbnails(opts) {
         this.video;
-        this.videoHtml;
         this.videoHeight;
         this.videoWidth;
         this.videoDuration;
@@ -117,22 +116,20 @@
             var url = window.URL || window.webkitURL;
             var fileURL = url.createObjectURL(file);
 
-            var videoHtml = $('<video></video>');
-                videoHtml.attr('id', 'videoHtmlCapture');
-                videoHtml.attr('controls', true);
-                videoHtml.attr('preload', 'metadata');
-                videoHtml.attr('crossorigin', '*');
-                videoHtml.attr('width', 600);
-                videoHtml.attr('src', fileURL);
+            var videoHtml = document.createElement('video');
+                videoHtml.setAttribute('id', 'videoHtmlCapture');
+                videoHtml.setAttribute('controls', true);
+                videoHtml.setAttribute('preload', 'metadata');
+                videoHtml.setAttribute('crossorigin', '*');
+                videoHtml.setAttribute('width', 600);
+                videoHtml.setAttribute('src', fileURL);
 
-            var theVideo = $('<source></source>');
-                theVideo.attr('src', fileURL);
-                theVideo.attr('type', file.type);
+            var theVideo = document.createElement('source');
+                theVideo.setAttribute('src', fileURL);
+                theVideo.setAttribute('type', file.type);
 
-            videoHtml.html(theVideo);
-            this.videoHtml = videoHtml;
-
-            this.video = this.videoHtml[0];            
+            videoHtml.appendChild(theVideo);
+            this.video = videoHtml;            
 
             //As soon as the meta is ready, trigger that capture is ready
             this.video.onloadedmetadata = function() {
@@ -185,8 +182,8 @@
                 this.thumbWidth     = parseInt(this.thumbWidth * ratio);
             }
 
-            this.videoHtml.width(this.thumbWidth);
-            this.videoHtml.height(this.thumbHeight);
+            this.video.width = this.thumbWidth;
+            this.video.height = this.thumbHeight;
 
             this.videoDuration = this.video.duration;
             this.videoInterval = this.videoDuration / (this.opts.count + 1); //this will ensure credits are ignored
@@ -294,9 +291,6 @@
         cleanUp() {
             this.video       = null;
             delete this.video;
-
-            this.videoHtml   = null;
-            delete this.videoHtml;
         },
         /**
          * Force and abort of the capture
